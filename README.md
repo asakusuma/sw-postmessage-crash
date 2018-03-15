@@ -1,5 +1,5 @@
 # sw-postmessage-crash
-Reproduces a service worker crashing a chrome tab via `postMessage` between an installing and active worker. The issue is intermittent, and chances of it happening seem to be increased by using `skipWaiting()`. Issue is reproduced in `Version 65.0.3325.162 (Official Build) (64-bit)`, but not Canary.
+Reproduces a service worker crashing a chrome tab via `postMessage` between an installing and active worker. The issue is intermittent, and chances of it happening seem to be increased by using `skipWaiting()`. We found the issue in a more complicated service worker that used `postMessage` but not actually need `skipWaiting()` to reproduce. Issue is reproduced in `Version 65.0.3325.162 (Official Build) (64-bit)`, but not Canary.
 
 `python -m SimpleHTTPServer 8000`
 
@@ -15,3 +15,8 @@ The Chrome logs show this error:
 Which appears to be: [SWDH_DECREMENT_WORKER_BAD_HANDLE](https://cs.chromium.org/chromium/src/content/browser/bad_message.h?type=cs&q=SWDH_DECREMENT_WORKER_BAD_HANDLE&sq=package:chromium&l=94)
 
 The only code path that invokes this message was removed in [this commit](https://chromium.googlesource.com/chromium/src/+/fa23f2ad198386c864ec998452d9f6d916b2219a).
+
+## Open Questions
+
+1. While it seems that the issue is related to `postMessage` and possibly `skipWaiting()`, what is the root cause?
+2. How can we work around the issue in non-canary (current release) versions of chrome?
