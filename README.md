@@ -1,5 +1,5 @@
 # sw-postmessage-crash
-Reproduces a service worker crashing a chrome tab via `postMessage` between an installing and active worker. The issue is intermittent, and chances of it happening seem to be increased by using `skipWaiting()`. We found the issue in a more complicated service worker that used `postMessage` but not actually need `skipWaiting()` to reproduce. Issue is reproduced in `Version 65.0.3325.162 (Official Build) (64-bit)`, but not Canary.
+Reproduces a service worker crashing a chrome tab via `postMessage` between an installing and active worker. The issue is intermittent, and chances of it happening seem to be increased by using `skipWaiting()`. We found the issue in a more complicated service worker that used `postMessage` but not actually need `skipWaiting()` to reproduce. Issue is reproduced in `Version 65.0.3325.162 (Official Build) (64-bit)`, but not Canary. I haven't been able to reproduce in Firefox either.
 
 `python -m SimpleHTTPServer 8000`
 
